@@ -1,5 +1,7 @@
 # Casterr
 
+![Casterr app icon](app-icon.png)
+
 Self-hosted podcast platform with RSS feeds, batch imports, waveform audio player, and embeddable players.
 
 - **GitHub:** https://github.com/MediaNerdStudio/castrr

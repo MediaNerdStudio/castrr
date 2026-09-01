@@ -1,12 +1,13 @@
 import { Play, Clock, Calendar } from 'lucide-react';
 import { formatDuration, formatDate } from '../utils/format.js';
 
-function EpisodeCard({ episode, size = 'normal', onPlay }) {
+function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay }) {
   const isLarge = size === 'large';
+  const isVertical = isLarge && vertical;
 
   return (
     <div
-      className={`card bg-base-100 shadow hover:shadow-xl transition-shadow cursor-pointer ${isLarge ? '' : 'sm:card-side'}`}
+      className={`card bg-base-100 shadow hover:shadow-xl transition-shadow cursor-pointer overflow-hidden ${isLarge ? '' : 'sm:card-side'}`}
       onClick={() => onPlay(episode)}
       role="button"
       tabIndex={0}
@@ -14,8 +15,31 @@ function EpisodeCard({ episode, size = 'normal', onPlay }) {
     >
       {isLarge ? (
         <>
-          {/* Mobile large card: small artwork, title, description */}
-          <div className="sm:hidden relative overflow-hidden rounded-2xl">
+          {isVertical ? (
+            <div className="relative">
+              <img
+                src={episode.artwork || '/default-cover.svg'}
+                alt={episode.title}
+                className="w-full h-48 sm:h-56 object-cover"
+              />
+              <div className="p-4 space-y-2">
+                <h3 className="card-title text-base sm:text-lg line-clamp-2">{episode.title}</h3>
+                <p className="text-sm opacity-80 line-clamp-4">{episode.description}</p>
+                <div className="flex items-center justify-between text-xs opacity-70 pt-1">
+                  <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(episode.publishedAt)}</span>
+                    <span className="flex items-center gap-1"><Clock size={12} /> {formatDuration(episode.duration)}</span>
+                  </span>
+                  <button className="btn btn-primary btn-sm btn-square" onClick={e => { e.stopPropagation(); onPlay(episode); }}>
+                    <Play size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Mobile large card: small artwork, title, description */}
+              <div className="sm:hidden relative overflow-hidden rounded-2xl">
             <img
               src={episode.artwork || '/default-cover.svg'}
               alt=""
@@ -76,9 +100,11 @@ function EpisodeCard({ episode, size = 'normal', onPlay }) {
             </div>
           </div>
         </>
-      ) : (
-        <>
-          {/* Mobile list-row layout */}
+      )}
+    </>
+  ) : (
+    <>
+      {/* Mobile list-row layout */}
           <div className="sm:hidden relative overflow-hidden">
             <img
               src={episode.artwork || '/default-cover.svg'}

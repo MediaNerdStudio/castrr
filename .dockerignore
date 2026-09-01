@@ -1,0 +1,15 @@
+node_modules
+ui/node_modules
+data
+media
+*.log
+.git
+.gitignore
+.env
+Dockerfile
+.dockerignore
+docker-compose.yml
+README.md
+Development
+scripts/*.mjs
+!scripts/hash-password.mjs

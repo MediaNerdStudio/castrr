@@ -1,0 +1,18 @@
+services:
+  casterr:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - BASE_URL=http://localhost:3000
+      - MEDIA_DIR=./media
+      - DATA_DIR=./data
+      # Set these in production via .env or your orchestrator:
+      # - ADMIN_PASSWORD=
+      # - JWT_SECRET=
+    volumes:
+      - ./data:/app/data
+      - ./media:/app/media
+    restart: unless-stopped

@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-base-100 text-base-content;
+}
+
+.waveform-container canvas {
+  border-radius: 0.5rem;
+}

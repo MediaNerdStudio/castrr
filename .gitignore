@@ -1,0 +1,9 @@
+node_modules/
+ui/node_modules/
+ui/dist/
+data/
+media/
+Development/
+.env
+*.log
+cookies.txt

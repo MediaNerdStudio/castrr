@@ -12,7 +12,10 @@ function Home() {
   return (
     <div className="min-h-screen bg-base-100">
       <div className="navbar min-h-14 bg-base-200 px-2 sm:px-4">
-        <a className="btn btn-ghost text-lg sm:text-xl font-bold">Casterr</a>
+        <a className="btn btn-ghost text-lg sm:text-xl font-bold flex items-center gap-2">
+          <img src="/Castrr.AppIcon.svg" alt="" className="w-8 h-8" />
+          Casterr
+        </a>
         <Link to="/admin" className="btn btn-sm btn-ghost ml-auto">Admin</Link>
       </div>
       <div className="max-w-full sm:max-w-[75%] mx-auto p-4 sm:p-6">

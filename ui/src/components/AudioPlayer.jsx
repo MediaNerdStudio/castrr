@@ -332,7 +332,7 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl
       )}
 
       {!compact && (
-        <div className="flex items-center justify-between gap-1 mt-3 overflow-x-auto">
+        <div className="flex items-center justify-between gap-1 mt-3 overflow-x-auto sm:overflow-visible">
           <div className="flex items-center gap-0 sm:gap-1 shrink-0">
             <button className="btn btn-ghost btn-sm px-1 sm:px-2 gap-0 sm:gap-1" style={{ color: primaryColor }} onClick={() => wavesurfer.current?.skip(-15)} title="Back 15s">
               <SkipBack size={16} />

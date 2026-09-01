@@ -77,7 +77,10 @@ function PodcastPage() {
   return (
     <div className="min-h-screen bg-base-100">
       <div className="navbar min-h-14 bg-base-200 px-2 sm:px-4 sticky top-0 z-50">
-        <Link to="/" className="btn btn-ghost px-2 sm:px-4 text-lg sm:text-xl font-bold">Casterr</Link>
+        <Link to="/" className="btn btn-ghost px-2 sm:px-4 text-lg sm:text-xl font-bold flex items-center gap-2">
+          <img src="/Castrr.AppIcon.svg" alt="" className="w-8 h-8" />
+          Casterr
+        </Link>
         <div className="ml-auto flex gap-0 sm:gap-2">
           <a href={getRssUrl(slug)} target="_blank" rel="noreferrer" className="btn btn-sm btn-ghost px-2 sm:px-3"><Rss size={16} /> <span className="hidden sm:inline">RSS</span></a>
           <button className="btn btn-sm btn-ghost px-2 sm:px-3" onClick={() => setShowEmbed(true)}><Share2 size={16} /> <span className="hidden sm:inline">Embed</span></button>

@@ -11,6 +11,7 @@ import { getPodcastBySlug, getEpisodeBySlug, getSettings } from './db.js';
 import podcastsRouter from './routes/podcasts.js';
 import episodesRouter from './routes/episodes.js';
 import rssRouter from './routes/rss.js';
+import jsonRouter from './routes/json.js';
 import importRouter from './routes/import.js';
 import authRouter from './routes/auth.js';
 import statsRouter from './routes/stats.js';
@@ -47,6 +48,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/podcasts', podcastsRouter);
 app.use('/api/episodes', episodesRouter);
 app.use('/api/rss', rssRouter);
+app.use('/api/json', jsonRouter);
 app.use('/api/import', requireAuth, importRouter);
 app.use('/api', statsRouter);
 

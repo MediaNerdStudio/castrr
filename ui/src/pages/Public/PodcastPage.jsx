@@ -158,7 +158,7 @@ function PodcastPage() {
         <section className="mt-0 sm:mt-8">
           <h2 className="text-2xl font-bold mb-4">Latest episode</h2>
           {featured ? (
-            <EpisodeCard episode={featured} size="large" onPlay={handlePlay} />
+            <EpisodeCard episode={featured} size="large" onPlay={handlePlay} selected={current?.id === featured.id} />
           ) : (
             <p className="opacity-60">No episodes in this group yet.</p>
           )}
@@ -168,7 +168,7 @@ function PodcastPage() {
           <section className="mt-6 sm:mt-8">
             <h2 className="text-2xl font-bold mb-4">More episodes</h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {rest.map(ep => <EpisodeCard key={ep.id} episode={ep} size="normal" onPlay={handlePlay} />)}
+              {rest.map(ep => <EpisodeCard key={ep.id} episode={ep} size="normal" onPlay={handlePlay} selected={current?.id === ep.id} />)}
             </div>
           </section>
         )}
@@ -177,7 +177,7 @@ function PodcastPage() {
           <h2 className="text-2xl font-bold mb-4">Highlights</h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {filteredEpisodes.slice(0, highlightLimit).map(ep => (
-              <EpisodeCard key={`h-${ep.id}`} episode={ep} size="large" vertical onPlay={handlePlay} />
+              <EpisodeCard key={`h-${ep.id}`} episode={ep} size="large" vertical onPlay={handlePlay} selected={current?.id === ep.id} />
             ))}
           </div>
         </section>

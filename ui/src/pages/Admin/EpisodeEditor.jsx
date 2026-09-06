@@ -23,6 +23,7 @@ function EpisodeEditor() {
     mimeType: 'audio/mpeg',
     fileSize: 0,
     tags: '',
+    spotifyPlaylist: '',
     chapters: []
   });
   const [podcasts, setPodcasts] = useState([]);
@@ -197,6 +198,11 @@ function EpisodeEditor() {
             <input className="input input-bordered" value={form.tags} onChange={e => setForm(f => ({ ...f, tags: e.target.value }))} placeholder="comma separated" />
           </label>
         </div>
+
+        <label className="form-control">
+          <span className="label-text font-semibold">Spotify playlist</span>
+          <input className="input input-bordered" value={form.spotifyPlaylist} onChange={e => setForm(f => ({ ...f, spotifyPlaylist: e.target.value }))} placeholder="https://open.spotify.com/playlist/..." />
+        </label>
 
         <div className="form-control">
           <span className="label-text font-semibold">Episode artwork (optional)</span>

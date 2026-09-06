@@ -1,13 +1,13 @@
-import { Play, Clock, Calendar } from 'lucide-react';
+import { Play, Pause, Clock, Calendar } from 'lucide-react';
 import { formatDuration, formatDate } from '../utils/format.js';
 
-function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay }) {
+function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay, selected = false }) {
   const isLarge = size === 'large';
   const isVertical = isLarge && vertical;
 
   return (
     <div
-      className={`card bg-base-100 shadow hover:shadow-xl transition-shadow cursor-pointer overflow-hidden ${isLarge ? '' : 'sm:card-side'}`}
+      className={`card shadow hover:shadow-xl transition-all cursor-pointer overflow-hidden ${selected ? 'bg-base-200 ring-2 ring-warning shadow-xl shadow-warning/30' : 'bg-base-100'} ${isLarge ? '' : 'sm:card-side'}`}
       onClick={() => onPlay(episode)}
       role="button"
       tabIndex={0}
@@ -30,8 +30,8 @@ function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay }) {
                     <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(episode.publishedAt)}</span>
                     <span className="flex items-center gap-1"><Clock size={12} /> {formatDuration(episode.duration)}</span>
                   </span>
-                  <button className="btn btn-primary btn-sm btn-square" onClick={e => { e.stopPropagation(); onPlay(episode); }}>
-                    <Play size={16} />
+                  <button className={`btn btn-sm btn-square ${selected ? 'btn-warning' : 'btn-primary'}`} onClick={e => { e.stopPropagation(); onPlay(episode); }}>
+                    {selected ? <Pause size={16} /> : <Play size={16} />}
                   </button>
                 </div>
               </div>
@@ -63,8 +63,8 @@ function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay }) {
                   <span className="flex items-center gap-1"><Calendar size={14} /> {formatDate(episode.publishedAt)}</span>
                   <span className="flex items-center gap-1"><Clock size={14} /> {formatDuration(episode.duration)}</span>
                 </span>
-                <button className="btn btn-primary btn-sm btn-square" onClick={e => { e.stopPropagation(); onPlay(episode); }}>
-                  <Play size={16} />
+                <button className={`btn btn-sm btn-square ${selected ? 'btn-warning' : 'btn-primary'}`} onClick={e => { e.stopPropagation(); onPlay(episode); }}>
+                  {selected ? <Pause size={16} /> : <Play size={16} />}
                 </button>
               </div>
             </div>
@@ -92,8 +92,8 @@ function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay }) {
                     <span className="flex items-center gap-1"><Calendar size={14} /> {formatDate(episode.publishedAt)}</span>
                     <span className="flex items-center gap-1"><Clock size={14} /> {formatDuration(episode.duration)}</span>
                   </span>
-                  <button className="btn btn-primary btn-sm btn-square" onClick={e => { e.stopPropagation(); onPlay(episode); }}>
-                    <Play size={16} />
+                  <button className={`btn btn-sm btn-square ${selected ? 'btn-warning' : 'btn-primary'}`} onClick={e => { e.stopPropagation(); onPlay(episode); }}>
+                    {selected ? <Pause size={16} /> : <Play size={16} />}
                   </button>
                 </div>
               </div>
@@ -129,8 +129,8 @@ function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay }) {
                   <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(episode.publishedAt)}</span>
                   <span className="flex items-center gap-1"><Clock size={12} /> {formatDuration(episode.duration)}</span>
                 </span>
-                <button className="btn btn-ghost btn-sm btn-square" onClick={e => { e.stopPropagation(); onPlay(episode); }}>
-                  <Play size={16} />
+                <button className={`btn btn-sm btn-square ${selected ? 'btn-warning' : 'btn-ghost'}`} onClick={e => { e.stopPropagation(); onPlay(episode); }}>
+                  {selected ? <Pause size={16} /> : <Play size={16} />}
                 </button>
               </div>
             </div>
@@ -148,8 +148,8 @@ function EpisodeCard({ episode, size = 'normal', vertical = false, onPlay }) {
                 <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(episode.publishedAt)}</span>
                 <span className="flex items-center gap-1"><Clock size={12} /> {formatDuration(episode.duration)}</span>
               </div>
-              <button className="btn btn-ghost btn-sm btn-square" onClick={e => { e.stopPropagation(); onPlay(episode); }}>
-                <Play size={16} />
+              <button className={`btn btn-sm btn-square ${selected ? 'btn-warning' : 'btn-ghost'}`} onClick={e => { e.stopPropagation(); onPlay(episode); }}>
+                {selected ? <Pause size={16} /> : <Play size={16} />}
               </button>
             </div>
           </div>

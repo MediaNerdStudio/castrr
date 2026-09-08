@@ -62,6 +62,12 @@ function PodcastPage() {
     getEpisodes(slug).then(setEpisodes);
   }, [slug]);
 
+  useEffect(() => {
+    if (podcast?.title) {
+      document.title = `${podcast.title} Podcast`;
+    }
+  }, [podcast?.title]);
+
   const groups = podcast?.groups || [];
   const filteredEpisodes = useMemo(() => {
     if (activeGroup === 'all' || activeGroup === '') return episodes;
@@ -78,8 +84,8 @@ function PodcastPage() {
     <div className="min-h-screen bg-base-100">
       <div className="navbar min-h-14 bg-base-200 px-2 sm:px-4 sticky top-0 z-50">
         <Link to="/" className="btn btn-ghost px-2 sm:px-4 text-lg sm:text-xl font-bold flex items-center gap-2">
-          <img src="/Castrr.AppIcon.svg" alt="" className="w-8 h-8" />
-          Casterr
+          <img src={podcast.artwork || '/Castrr.AppIcon.svg'} alt="" className="w-8 h-8 rounded object-cover" />
+          {podcast.title}
         </Link>
         <div className="ml-auto flex gap-0 sm:gap-2">
           <a href={getRssUrl(slug)} target="_blank" rel="noreferrer" className="btn btn-sm btn-ghost px-2 sm:px-3"><Rss size={16} /> <span className="hidden sm:inline">RSS</span></a>

@@ -152,6 +152,7 @@ function PodcastPage() {
               title={current.title}
               artist={podcast.author}
               chapters={current.chapters || []}
+              tracklist={current.tracklist || []}
               spotifyUrl={current.spotifyPlaylist || podcast.spotifyPlaylist}
               shareUrl={`${window.location.origin}/podcast/${slug}/episode/${current.slug}`}
               startAt={startAt}

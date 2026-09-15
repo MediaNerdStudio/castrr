@@ -101,3 +101,8 @@ docker push yourdockerhub/casterr:latest
 ```
 
 The image includes `ffmpeg` for audio duration/waveform processing and persists `data/` and `media/` in volumes.
+
+## Tracklist / Spotify metadata
+
+Episodes can contain a `tracklist` array with `start`, `duration`, `title`, `artist`, `spotifyId`, and `artwork`.
+Set `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` in `.env` to enable automatic metadata/artwork enrichment from the Spotify Web API.

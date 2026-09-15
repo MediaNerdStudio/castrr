@@ -90,6 +90,7 @@ function EpisodePage() {
               title={episode.title}
               artist={podcast.author}
               chapters={episode.chapters || []}
+              tracklist={episode.tracklist || []}
               spotifyUrl={episode.spotifyPlaylist || podcast.spotifyPlaylist}
               shareUrl={`${window.location.origin}/podcast/${slug}/episode/${episode.slug}`}
               startAt={startAt}

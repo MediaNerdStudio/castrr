@@ -9,3 +9,67 @@ body {
 .waveform-container canvas {
   border-radius: 0.5rem;
 }
+
+.track-waveform::part(region) {
+  border-left: 2px solid rgba(34, 197, 94, 0.9);
+  border-right: 2px solid rgba(34, 197, 94, 0.9);
+}
+
+.track-marker[data-active="true"] .track-marker-artwork {
+  width: 36px;
+  height: 36px;
+}
+
+.track-marker[data-active="true"] .track-marker-info {
+  display: flex;
+}
+
+.track-marker {
+  position: absolute;
+  top: 0;
+  width: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.track-marker-info {
+  display: none;
+  flex-direction: row;
+  gap: 0.3rem;
+  width: fit-content;
+  background-color: #121212;
+  color: #FAFAFA;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3em;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.track-marker-info .artist {
+  font-weight: 700;
+  font-size: 0.65rem;
+}
+
+.track-marker-info .title {
+  font-size: 0.65rem;
+}
+
+.track-marker-artwork {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  overflow: hidden;
+  transition: width 0.2s, height 0.2s;
+}
+
+.track-marker-artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

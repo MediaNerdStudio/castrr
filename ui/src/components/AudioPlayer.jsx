@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
+import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions.esm.js';
 import { Play, Pause, SkipBack, SkipForward, Volume2, Share2, Link as LinkIcon, Mail, MessageCircle } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify } from '@fortawesome/free-brands-svg-icons';
@@ -21,7 +22,7 @@ function extractSpotifyPlaylistId(input) {
   return null;
 }
 
-function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl = '', primaryColor = '#f472b6', height = 80, compact = false, mini = false, autoplay = false, spotifyUrl = '', episodeId, shareUrl = '', startAt = 0, className = '' }) {
+function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], tracklist = [], peaksUrl = '', primaryColor = '#f472b6', height = 80, compact = false, mini = false, autoplay = false, spotifyUrl = '', episodeId, shareUrl = '', startAt = 0, className = '' }) {
   const containerRef = useRef(null);
   const shareRef = useRef(null);
   const wavesurfer = useRef(null);
@@ -36,6 +37,11 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl
   const [shareStartAt, setShareStartAt] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const startAtApplied = useRef(false);
+  const tracklistRef = useRef(tracklist);
+
+  useEffect(() => {
+    tracklistRef.current = tracklist;
+  }, [tracklist]);
 
   useEffect(() => {
     if (!shareOpen) return;
@@ -51,6 +57,24 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl
   const showWaveform = height > 0;
   const remaining = Math.max(0, duration - currentTime);
 
+  function getActiveTrackIndex() {
+    if (!duration || !tracklist?.length) return -1;
+    return tracklist.findIndex((track, idx, arr) => {
+      const start = track.start || 0;
+      let end = start;
+      if (track.duration && track.duration > 0) {
+        end = start + track.duration;
+      } else if (idx < arr.length - 1) {
+        end = arr[idx + 1].start;
+      } else {
+        end = duration;
+      }
+      return currentTime >= start && currentTime < end;
+    });
+  }
+
+  const activeTrackIndex = getActiveTrackIndex();
+
   useEffect(() => {
     if (!containerRef.current || !audioUrl) return;
 
@@ -61,6 +85,7 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl
     setError('');
 
     let cancelled = false;
+    let regionsPlugin = null;
 
     async function init() {
       setLoading(true);
@@ -101,6 +126,10 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl
 
       wavesurfer.current = ws;
 
+      if (tracklistRef.current?.length > 0) {
+        regionsPlugin = ws.registerPlugin(RegionsPlugin.create());
+      }
+
       ws.on('ready', () => {
         const dur = ws.getDuration();
         setDuration(dur);
@@ -114,6 +143,28 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl
         }
         if (autoplay) {
           ws.play().catch(() => { /* autoplay blocked by browser */ });
+        }
+
+        if (regionsPlugin) {
+          tracklistRef.current.forEach((track, idx, arr) => {
+            const start = track.start || 0;
+            let end = start;
+            if (track.duration && track.duration > 0) {
+              end = start + track.duration;
+            } else if (idx < arr.length - 1) {
+              end = arr[idx + 1].start;
+            } else {
+              end = dur;
+            }
+            if (end <= start) end = start + 1;
+            regionsPlugin.addRegion({
+              start,
+              end,
+              color: 'rgba(34, 197, 94, 0.12)',
+              drag: false,
+              resize: false
+            });
+          });
         }
       });
 
@@ -282,11 +333,36 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], peaksUrl
       <div className="mt-2 h-0 sm:h-auto overflow-hidden opacity-0 sm:opacity-100">
         <div
           ref={containerRef}
-          className="w-full overflow-hidden"
+          className="track-waveform w-full overflow-hidden"
           style={{ height: `${height || 1}px`, opacity: height > 0 ? 1 : 0 }}
         />
         {showWaveform && loading && <div className="loading loading-dots loading-xs mt-1"></div>}
         {showWaveform && error && <div className="text-error text-xs mt-1">{error}</div>}
+        {!mini && tracklist?.length > 0 && duration > 0 && (
+          <div className="relative h-16 mt-1">
+            {tracklist.map((track, idx) => {
+              const start = track.start || 0;
+              const left = (start / duration) * 100;
+              const active = idx === activeTrackIndex;
+              return (
+                <div
+                  key={idx}
+                  className="track-marker"
+                  data-active={active}
+                  style={{ left: `${left}%` }}
+                >
+                  <div className="track-marker-artwork">
+                    <img src={track.artwork || '/default-cover.svg'} alt="" />
+                  </div>
+                  <div className="track-marker-info">
+                    <span className="artist">{track.artist}</span>
+                    <span className="title">{track.title}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {!mini && (

@@ -100,6 +100,7 @@ function EmbedPlayer() {
               title={currentEpisode.title}
               artist={podcast.author}
               chapters={currentEpisode.chapters || []}
+              tracklist={currentEpisode.tracklist || []}
               primaryColor={color}
               height={playerHeight}
               compact={false}
@@ -118,6 +119,7 @@ function EmbedPlayer() {
           title={currentEpisode.title}
           artist={podcast.author}
           chapters={currentEpisode.chapters || []}
+          tracklist={currentEpisode.tracklist || []}
           primaryColor={color}
           height={playerHeight}
           compact={size === 'mini' || size === 'compact'}

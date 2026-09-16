@@ -160,7 +160,7 @@ function AudioPlayer({ audioUrl, artwork, title, artist, chapters = [], tracklis
             regionsPlugin.addRegion({
               start,
               end,
-              color: 'rgba(34, 197, 94, 0.12)',
+              color: 'rgba(29, 185, 84, 0.6)',
               drag: false,
               resize: false
             });
